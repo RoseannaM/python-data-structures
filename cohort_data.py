@@ -3,7 +3,7 @@
 
 def unique_houses(filename):
     """TODO: Return a set of student houses.
-
+    
     Iterate over the cohort_data.txt file to look for all of the included house names
     and create a set called "houses" that holds those names.
 
@@ -13,10 +13,18 @@ def unique_houses(filename):
     ["Dumbledore's Army", 'Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin']
 
     """
+    # access textfile
+    cohert_data = open(filename)
 
+        
     houses = set()
-
-    # Code goes here
+    
+    # loop thru txtfile lines
+    for line in cohert_data:
+        # captures students info into a list
+        student_info = line.split("|")
+        if student_info[2] != "":
+            houses.add(student_info[2])
 
     return houses
 
@@ -34,17 +42,69 @@ def sort_by_cohort(filename):
     >>> sort_by_cohort("cohort_data.txt")
     [['Harry Potter', 'Mandy Brocklehurst', 'Ron Weasley', 'Oliver Wood', 'Colin Creevey', 'Cho Chang', 'Michael Corner', 'Draco Malfoy', 'Seamus Finnigan', 'Eddie Carmichael', 'Theodore Nott', 'Terence Higgs', 'Hermione Granger', 'Penelope Clearwater', 'Angelina Johnson', 'Dennis Creevey'], ['Neville Longbottom', 'Cedric Diggory', 'Pansy Parkinson', 'Anthony Goldstein', 'Padma Patil', 'Luna Lovegood', 'Eleanor Branstone', 'Lee Jordan', 'Marietta Edgecombe', 'Andrew Kirke', 'Ginny Weasley', 'Mary Macdonald', 'Blaise Zabini', 'Natalie McDonald', 'Adrian Pucey', 'Hannah Abbott', 'Graham Pritchard', 'Susan Bones', 'Roger Davies', 'Owen Cauldwell'], ['Laura Madley', 'Orla Quirke', 'Parvati Patil', 'Eloise Midgeon', 'Zacharias Smith', 'Cormac McLaggen', 'Lisa Turpin', 'Demelza Robins', 'Ernie Macmillan', 'Millicent Bullstrode', 'Percy Weasley', 'Jimmy Peakes', 'Justin Finch-Fletchley', 'Miles Bletchley', 'Malcolm Baddock'], ['Marcus Belby', 'Euan Abercrombie', 'Vincent Crabbe', 'Ritchie Coote', 'Katie Bell', 'Terry Boot', 'Lavender Brown', 'Gregory Goyle', 'Marcus Flint', 'Dean Thomas', 'Jack Sloper', 'Rose Zeller', 'Stewart Ackerley', 'Fred Weasley', 'George Weasley', 'Romilda Vane', 'Alicia Spinnet', 'Kevin Whitby'], ['Friendly Friar', 'Grey Lady', 'Nearly Headless Nick', 'Bloody Baron']]
     """
-
+    cohort_data = open(filename)
+    
     all_students = []
+    
     winter_16 = []
     spring_16 = []
     summer_16 = []
     fall_15 = []
     ghosts = []
 
+    cohorts = [
+    winter_16,
+    spring_16,
+    summer_16,
+    fall_15,
+    ghosts ]
+    
     # Code goes here
+    for line in cohort_data:
+        # captures students info into a list
+        student_info = line.split("|")
 
-    return all_students
+        cohort = student_info[4].strip()
+
+        student_name = student_info[0] + " " + student_info[1]
+
+        # cohort = student_info[4]
+        # student_info is the line of data
+        # winter_16 =[ cohort 
+        #             for student in student_info 
+        #             if cohort.startswith("W") and cohort.endswith("6"):
+        #if not a ghost
+
+        #print(type(cohort)) == <class 'str'>
+        
+        if cohort != "G" or cohort != "I":
+            if cohort == "Winter 2016":
+                cohorts[0].append(student_name)
+            if cohort == "Spring 2016":
+                cohorts[1].append(student_name)
+            if cohort == "Summer 2016":
+                cohorts[2].append(student_name)
+            if cohort == "Fall 2015":
+                cohorts[3].append(student_name)
+        
+
+        if cohort == "G":
+            ghosts.append(student_name)
+
+        # else:
+        #     if cohort == "Winter 2016":
+        #         winter_16.append(student_name)
+        #     if cohort == "Spring 2016":
+        #         cohorts[1].append(student_name)
+        #     if cohort == "Summer 2016":
+        #         cohorts[2].append(student_name)
+        #     if cohort == "Fall 2015":
+        #         cohorts[3].append(student_name)
+
+            #check what cohort it is and add it to the correct one
+    all_students = [fall_15, winter_16,spring_16,summer_16, ghosts]
+   
+    return all_students 
 
 
 def hogwarts_by_house(filename):
